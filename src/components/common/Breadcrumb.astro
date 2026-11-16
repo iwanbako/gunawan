@@ -18,28 +18,18 @@ if (items.length === 0) return null;
   class="relative bg-white border-b border-slate-200 overflow-hidden shadow-sm"
 >
   <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3">
-    <ol
-      class="flex items-center flex-wrap gap-1.5 text-[10px] sm:text-xs text-slate-500"
-      itemscope
-      itemtype="https://schema.org/BreadcrumbList"
-    >
+    <ol class="flex items-center flex-wrap gap-1.5 text-[10px] sm:text-xs text-slate-500">
       {items.map((item, idx) => {
         const isLast = idx === items.length - 1;
 
         return (
-          <li
-            class="flex items-center gap-1.5"
-            itemprop="itemListElement"
-            itemscope
-            itemtype="https://schema.org/ListItem"
-          >
+          <li class="flex items-center gap-1.5">
             {item.href && !isLast ? (
               <a
                 href={item.href}
                 class="hover:text-red-600 transition-colors font-medium text-slate-600"
-                itemprop="item"
               >
-                <span itemprop="name">{item.label}</span>
+                <span>{item.label}</span>
               </a>
             ) : (
               <span
@@ -48,13 +38,10 @@ if (items.length === 0) return null;
                     ? "text-slate-900 font-bold"
                     : "text-slate-600 font-medium"
                 }
-                itemprop="name"
               >
                 {item.label}
               </span>
             )}
-
-            <meta itemprop="position" content={String(idx + 1)} />
 
             {!isLast && (
               <span class="text-slate-400 px-0.5" aria-hidden="true">
