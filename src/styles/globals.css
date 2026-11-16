@@ -1,1 +1,87 @@
 @import "tailwindcss";
+
+/* Kustomisasi Konten Artikel Blog */
+.article-content h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0f172a; /* slate-900 */
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #fee2e2; /* red-100 */
+  letter-spacing: -0.025em;
+}
+
+@media (min-width: 640px) {
+  .article-content h2 {
+    font-size: 1.875rem;
+  }
+}
+
+.article-content h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.article-content p {
+  color: #334155; /* slate-700 */
+  line-height: 1.9;
+  font-size: 1rem;
+  margin-bottom: 1.25rem;
+  word-break: break-word;
+}
+
+@media (min-width: 768px) {
+  .article-content p {
+    font-size: 1.0625rem; /* 17px */
+  }
+}
+
+/* Drop cap untuk paragraf pertama */
+.article-content p:first-of-type::first-letter {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #dc2626; /* red-600 */
+  float: left;
+  margin-right: 0.75rem;
+  margin-top: 0.25rem;
+  line-height: 0.8;
+}
+
+.article-content ul, .article-content ol {
+  color: #334155;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+  line-height: 1.7;
+}
+
+.article-content li {
+  margin-bottom: 0.5rem;
+}
+
+.article-content strong {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.article-content a {
+  color: #dc2626;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.article-content blockquote {
+  border-left: 4px solid #dc2626;
+  background-color: rgba(254, 226, 226, 0.5); /* red-50/50 */
+  padding: 1rem 1.25rem;
+  border-top-right-radius: 0.75rem;
+  border-bottom-right-radius: 0.75rem;
+  margin: 1.5rem 0;
+  color: #334155;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
