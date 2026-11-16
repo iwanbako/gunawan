@@ -1,0 +1,425 @@
+---
+import Layout from "../../../../layouts/Layout.astro";
+import Breadcrumb from "../../../../components/common/Breadcrumb.astro";
+import HeroSection from "../../../../components/sections/HeroSection.astro";
+import ServicesSection from "../../../../components/sections/ServicesSection.astro";
+import GuaranteeSection from "../../../../components/sections/GuaranteeSection.astro";
+import TechPartners from "../../../../components/sections/TechPartners.astro";
+import PortfolioSection from "../../../../components/sections/PortfolioSection.astro";
+import TestimonialSection from "../../../../components/sections/TestimonialSection.astro";
+import PricingSection from "../../../../components/sections/PricingSection.astro";
+import FaqSection from "../../../../components/sections/FaqSection.astro";
+import OtherDistrictsSection from "../../../../components/sections/OtherDistrictsSection.astro";
+import MapSection from "../../../../components/sections/MapSection.astro";
+
+import { findDistrict, getAllDistrictParams } from "../../../../lib/wilayah";
+import { generateKecamatanContent } from "../../../../lib/kecamatan-content";
+
+const SITE_URL = "https://kerabatweb.com";
+const waNumber = "6285938573419";
+const waLink = (msg: string) =>
+  `https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`;
+
+// ============================================================
+// STATIC PATHS (Pengganti generateStaticParams di Next.js)
+// ============================================================
+export async function getStaticPaths() {
+  const params = getAllDistrictParams();
+  return params.map((p) => ({
+    params: {
+      provinsi: p.provinsi,
+      kabupaten: p.kabupaten,
+      kecamatan: p.kecamatan,
+    },
+  }));
+}
+
+const { provinsi, kabupaten, kecamatan } = Astro.params;
+const data = findDistrict(provinsi, kabupaten, kecamatan);
+
+// Jika kecamatan tidak ditemukan, arahkan ke halaman 404
+if (!data) {
+  return Astro.redirect("/404");
+}
+
+const content = generateKecamatanContent(
+  data.province,
+  data.regency,
+  data.district.name
+);
+
+const url = `${SITE_URL}/${provinsi}/${kabupaten}/${kecamatan}/`;
+const ogImage = `${SITE_URL}/og-image.jpg`;
+
+// Aggregate rating dinamis per kecamatan
+const hash = provinsi.length + kabupaten.length + kecamatan.length;
+const ratingBase = 4.75 + ((hash * 7) % 25) / 100;
+const reviewCount = 80 + ((hash * 213) % 500);
+
+// JSON-LD Product
+const productSchema = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  name: `Jasa Pembuatan Website ${content.namaLengkap}`,
+  image: ogImage,
+  description: `Jasa pembuatan website profesional untuk bisnis, sekolah, dan company profile di ${content.namaLengkap}, ${content.namaKabupaten}, ${content.namaProvinsi}. Perluas jangkauan usaha Anda dengan website dari KerabatWeb.`,
+  brand: { "@type": "Brand", name: "KerabatWeb" },
+  offers: {
+    "@type": "AggregateOffer",
+    url,
+    priceCurrency: "IDR",
+    lowPrice: "499000",
+    highPrice: "4500000",
+    offerCount: "3",
+    priceValidUntil: "2026-12-31",
+  },
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: ratingBase.toFixed(2),
+    bestRating: "5",
+    worstRating: "1",
+    ratingCount: reviewCount.toString(),
+  },
+};
+
+// JSON-LD FAQPage
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: content.faqs.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+
+// JSON-LD Breadcrumb
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Beranda",
+      item: SITE_URL,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: content.namaProvinsi,
+      item: `${SITE_URL}/${provinsi}`,
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: content.namaKabupaten,
+      item: `${SITE_URL}/${provinsi}/${kabupaten}`,
+    },
+    {
+      "@type": "ListItem",
+      position: 4,
+      name: content.namaKecamatan,
+      item: url,
+    },
+  ],
+};
+
+const jsonLdData = [productSchema, faqSchema, breadcrumbSchema];
+
+// Breadcrumb items (Visual UI)
+const breadcrumbItems = [
+  { label: "Beranda", href: "/" },
+  { label: content.namaProvinsi, href: `/${provinsi}` },
+  { label: content.namaKabupaten, href: `/${provinsi}/${kabupaten}` },
+  { label: content.namaKecamatan },
+];
+
+// ============================================================
+// PRICING DATA
+// ============================================================
+const pricingData = [
+  {
+    name: "Gold",
+    target: "Paket Website Landing Page / UMKM",
+    priceNormal: "Rp 2.500.000",
+    pricePromo: "Rp 499.000",
+    diskon: "Diskon 60%",
+    periode: "PER TAHUN",
+    popular: false,
+    badge: null,
+    features: [
+      "Hosting 1 Tahun",
+      "Gratis Domain",
+      "Gratis Sertifikat SSL",
+      "1x Revisi Design Minor",
+      "4x Update",
+      "SEO & Mobile Friendly",
+      "Support Maintenance",
+      "Setup 1 Halaman",
+      "Input 5 Produk Awal",
+      "Button WhatsApp (CTA)",
+      "Slider Banner",
+    ],
+  },
+  {
+    name: "Platinum",
+    target: "Paket Website Company Profile Berkembang",
+    priceNormal: "Rp 3.500.000",
+    pricePromo: "Rp 1.499.000",
+    diskon: "Diskon 57%",
+    periode: "PER TAHUN",
+    popular: false,
+    badge: "Recommended",
+    features: [
+      "Hosting 1 Tahun",
+      "Gratis Domain",
+      "Gratis Sertifikat SSL",
+      "2x Revisi Design",
+      "12x Update",
+      "SEO & Mobile Friendly",
+      "Support Maintenance",
+      "Setup 5 Halaman",
+      "Input 10 Produk Awal",
+      "Button WhatsApp (CTA)",
+      "Slider Banner",
+    ],
+  },
+  {
+    name: "Diamond",
+    target: "Paket Toko Online / E-Commerce Siap Jualan",
+    priceNormal: "Rp 4.500.000",
+    pricePromo: "Rp 3.150.000",
+    diskon: "Diskon 30%",
+    periode: "PER TAHUN",
+    popular: true,
+    badge: "Terpopuler",
+    features: [
+      "Hosting 1 Tahun",
+      "Gratis Domain",
+      "Gratis Sertifikat SSL",
+      "2x Revisi Design",
+      "12x Update",
+      "SEO & Mobile Friendly",
+      "Prioritas Support Maintenance",
+      "Setup 5 Halaman",
+      "Input 10 Produk Awal",
+      "Slider Banner",
+      "Keranjang Belanja",
+      "Fitur Cek Ongkir",
+      "Integrasi WhatsApp",
+      "Integrasi Marketplace",
+    ],
+  },
+  {
+    name: "Custom",
+    target: "Solusi Skala Besar & Kebutuhan Khusus",
+    priceNormal: "",
+    pricePromo: "Sesuai Kebutuhan",
+    diskon: "Custom Budget",
+    periode: "PER TAHUN",
+    popular: false,
+    badge: "Fleksibel",
+    features: [
+      "Hosting Custom",
+      "Bisa Pilih Domain",
+      "Gratis Sertifikat SSL",
+      "3x Revisi Design",
+      "12x Update",
+      "SEO & Mobile Friendly",
+      "Dedicated Support",
+      "Halaman Sesuai Kebutuhan",
+      "Integrasi Sesuai Kebutuhan",
+      "Design Custom",
+      "Akses Penuh",
+      "Dan lain-lain",
+    ],
+  },
+];
+
+// ============================================================
+// DATA KEUNGGULAN (inline)
+// ============================================================
+const keunggulanData = [
+  {
+    icon: "⚡",
+    title: "Proses Cepat",
+    desc: "Website landing page selesai 3–7 hari kerja. Company profile 7–14 hari. Tanpa drama, tanpa delay.",
+  },
+  {
+    icon: "💰",
+    title: "Harga Transparan",
+    desc: "Mulai Rp 499.000/tahun. Sudah termasuk domain, hosting, SSL. Tidak ada biaya tersembunyi.",
+  },
+  {
+    icon: "🔍",
+    title: "SEO-Friendly",
+    desc: "Struktur semantik bersih, meta tag lengkap, sitemap otomatis. Mudah ditemukan di Google.",
+  },
+  {
+    icon: "📱",
+    title: "Mobile Responsive",
+    desc: "Tampil sempurna di HP, tablet, dan desktop. Lebih dari 70% pengunjung Anda pakai HP.",
+  },
+  {
+    icon: "🛡️",
+    title: "Garansi & Support",
+    desc: "Garansi revisi, support maintenance, dan pendampingan setelah website live.",
+  },
+  {
+    icon: "🎯",
+    title: "Fokus Konversi",
+    desc: "Tombol WhatsApp, form kontak, dan CTA yang dirancang untuk mengubah pengunjung jadi pelanggan.",
+  },
+];
+
+const pageTitle = content.metaTitle;
+const pageDescription = content.metaDescription;
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  image={ogImage}
+  canonicalURL={url}
+  jsonLd={jsonLdData}
+>
+  <Breadcrumb items={breadcrumbItems} />
+
+  <main class="flex-1 w-full">
+    <!-- 1. HERO -->
+    <HeroSection
+      waNumber={waNumber}
+      badge={content.hero.headline}
+      headline={content.hero.badge}
+      subheadline={content.hero.subheadline}
+      ctaText={content.hero.ctaText}
+    />
+
+    <!-- 2. SERVICES -->
+    <ServicesSection
+      title={content.services.title}
+      subtitle={content.services.subtitle}
+    />
+
+    <!-- 4. WHY US — INLINE SECTION -->
+    <section class="bg-white py-12 sm:py-16 border-b border-slate-200 overflow-hidden">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <!-- Header -->
+        <div class="text-center mb-8 sm:mb-10">
+          <span class="inline-block text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-red-50 border border-red-200 text-red-700 px-3.5 py-1.5 rounded-full shadow-sm mb-3">
+            Keunggulan Kami
+          </span>
+
+          <h2 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
+            Kenapa Pilih KerabatWeb di{" "}
+            <span class="text-red-600">
+              {content.namaKecamatan}
+            </span>
+            ?
+          </h2>
+
+          <p class="mt-2 text-xs sm:text-sm text-slate-600 max-w-xl mx-auto leading-relaxed">
+            Kami paham kebutuhan digital bisnis lokal di Kecamatan{" "}
+            {content.namaKecamatan}, {content.namaKabupaten},{" "}
+            {content.namaProvinsi}. Berikut alasan mengapa ratusan
+            pelaku usaha mempercayakan website mereka kepada kami.
+          </p>
+        </div>
+
+        <!-- Grid 6 keunggulan -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+          {keunggulanData.map((item) => (
+            <div
+              class="bg-white border border-slate-200 rounded-xl p-4 sm:p-5 transition-all duration-200 hover:border-red-500 hover:shadow-md shadow-sm group"
+            >
+              <div class="flex items-start gap-3">
+                <span class="text-2xl sm:text-3xl shrink-0 leading-none">
+                  {item.icon}
+                </span>
+                <div class="min-w-0">
+                  <h3 class="text-sm sm:text-base font-bold text-slate-900 mb-1 group-hover:text-red-600 transition-colors">
+                    {item.title}
+                  </h3>
+                  <p class="text-[11px] sm:text-xs text-slate-600 leading-relaxed">
+                    {item.desc}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- CTA kecil -->
+        <div class="text-center mt-8">
+          <a
+            href={waLink(
+              `Halo KerabatWeb, saya dari Kecamatan ${content.namaKecamatan}, ${content.namaKabupaten} ingin konsultasi pembuatan website.`
+            )}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-bold px-5 py-2.5 rounded-full transition-all text-sm sm:text-base shadow-md shadow-red-600/20 active:scale-95"
+          >
+            Konsultasi Gratis Sekarang
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 7l5 5m0 0l-5 5m5-5H6"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. GUARANTEE -->
+    <GuaranteeSection />
+
+    <!-- 6. TECH PARTNERS -->
+    <TechPartners />
+
+    <!-- 8. PORTFOLIO -->
+    <PortfolioSection
+      title={content.portfolio.title}
+      subtitle={content.portfolio.subtitle}
+      kabupaten={content.namaKabupaten}
+    />
+
+    <!-- 9. TESTIMONIAL -->
+    <TestimonialSection
+      title={content.testimonial.title}
+      subtitle={content.testimonial.subtitle}
+      kabupaten={content.namaKabupaten}
+    />
+
+    <!-- 11. PRICING -->
+    <PricingSection
+      pricing={pricingData}
+      waNumber={waNumber}
+      locationName={content.namaKecamatan}
+      note={content.pricingNote}
+    />
+
+    <!-- 12. FAQ -->
+    <FaqSection faqs={content.faqs} waNumber={waNumber} />
+
+    <!-- 14. KECAMATAN LAIN -->
+    <OtherDistrictsSection
+      provinsiSlug={provinsi}
+      kabupatenSlug={kabupaten}
+      kabupatenName={content.namaKabupaten}
+      currentKecamatanSlug={kecamatan}
+      districts={content.districts}
+    />
+
+    <!-- 15. PETA AREA LAYANAN -->
+    <MapSection />
+  </main>
+</Layout>

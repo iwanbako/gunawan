@@ -1,11 +1,182 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import HeroSection from "../components/sections/HeroSection.astro";
+import ServicesSection from "../components/sections/ServicesSection.astro";
+import WhyUsSection from "../components/sections/WhyUsSection.astro";
+import GuaranteeSection from "../components/sections/GuaranteeSection.astro";
+import TechPartners from "../components/sections/TechPartners.astro";
+import PortfolioSection from "../components/sections/PortfolioSection.astro";
+import TestimonialSection from "../components/sections/TestimonialSection.astro";
+import PricingSection from "../components/sections/PricingSection.astro";
+import FaqSection from "../components/sections/FaqSection.astro";
+import AllProvincesSection from "../components/sections/AllProvincesSection.astro";
+import MapSection from "../components/sections/MapSection.astro";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import { provinsiContent } from "../data/provinsi-content";
+
+const SITE_URL = "https://kerabatweb.com";
+const waNumber = "6285938573419";
+
+const pricingData = [
+  {
+    name: "Gold",
+    target: "Paket Website Landing Page / UMKM",
+    priceNormal: "Rp 2.500.000",
+    pricePromo: "Rp 499.000",
+    diskon: "Diskon 60%",
+    periode: "PER TAHUN",
+    popular: false,
+    badge: null,
+    features: [
+      "Hosting 1 Tahun",
+      "Gratis Domain",
+      "Gratis Sertifikat SSL",
+      "1x Revisi Design Minor",
+      "4x Update",
+      "SEO & Mobile Friendly",
+      "Support Maintenance",
+      "Setup 1 Halaman",
+      "Input 5 Produk Awal",
+      "Button WhatsApp (CTA)",
+      "Slider Banner",
+    ],
+  },
+  {
+    name: "Platinum",
+    target: "Paket Website Company Profile Berkembang",
+    priceNormal: "Rp 3.500.000",
+    pricePromo: "Rp 1.499.000",
+    diskon: "Diskon 57%",
+    periode: "PER TAHUN",
+    popular: false,
+    badge: "Recommended",
+    features: [
+      "Hosting 1 Tahun",
+      "Gratis Domain",
+      "Gratis Sertifikat SSL",
+      "2x Revisi Design",
+      "12x Update",
+      "SEO & Mobile Friendly",
+      "Support Maintenance",
+      "Setup 5 Halaman",
+      "Input 10 Produk Awal",
+      "Button WhatsApp (CTA)",
+      "Slider Banner",
+    ],
+  },
+  {
+    name: "Diamond",
+    target: "Paket Toko Online / E-Commerce Siap Jualan",
+    priceNormal: "Rp 4.500.000",
+    pricePromo: "Rp 3.150.000",
+    diskon: "Diskon 30%",
+    periode: "PER TAHUN",
+    popular: true,
+    badge: "Terpopuler",
+    features: [
+      "Hosting 1 Tahun",
+      "Gratis Domain",
+      "Gratis Sertifikat SSL",
+      "2x Revisi Design",
+      "12x Update",
+      "SEO & Mobile Friendly",
+      "Prioritas Support Maintenance",
+      "Setup 5 Halaman",
+      "Input 10 Produk Awal",
+      "Slider Banner",
+      "Keranjang Belanja",
+      "Fitur Cek Ongkir",
+      "Integrasi WhatsApp",
+      "Integrasi Marketplace",
+    ],
+  },
+  {
+    name: "Custom",
+    target: "Solusi Skala Besar & Kebutuhan Khusus",
+    priceNormal: "",
+    pricePromo: "Sesuai Kebutuhan",
+    diskon: "Custom Budget",
+    periode: "PER TAHUN",
+    popular: false,
+    badge: "Fleksibel",
+    features: [
+      "Hosting Custom",
+      "Bisa Pilih Domain",
+      "Gratis Sertifikat SSL",
+      "3x Revisi Design",
+      "12x Update",
+      "SEO & Mobile Friendly",
+      "Dedicated Support",
+      "Halaman Sesuai Kebutuhan",
+      "Integrasi Sesuai Kebutuhan",
+      "Design Custom",
+      "Akses Penuh",
+      "Dan lain-lain",
+    ],
+  },
+];
+
+const faqsData = [
+  {
+    q: "Berapa lama proses pengerjaan pembuatan website?",
+    a: "Paket Gold selesai dalam 3–5 hari kerja, Platinum 7–10 hari, sedangkan Diamond atau Custom memakan waktu 2–3 minggu tergantung tingkat kompleksitas fitur.",
+  },
+  {
+    q: "Apakah sudah termasuk domain dan hosting?",
+    a: "Ya! Paket Gold, Platinum, dan Diamond sudah termasuk gratis domain (.com / my.id) selama 1 tahun penuh beserta hosting performa tinggi.",
+  },
+  {
+    q: "Apakah saya bisa melakukan revisi selama proses pembuatan?",
+    a: "Tentu saja. Setiap paket sudah mencakup kuota revisi desain (minor hingga standar) agar hasil akhirnya sesuai dengan keinginan Anda.",
+  },
+  {
+    q: "Apakah website dijamin ramah SEO (Search Engine Optimization)?",
+    a: "Sangat ramah SEO. Setiap website dibangun dengan struktur kode semantik yang bersih, kecepatan muat super cepat, serta meta tags lengkap.",
+  },
+];
+
+const allProvinsi = Object.values(provinsiContent).map((p) => ({
+  nama: p.nama,
+  slug: p.slug,
+}));
+
+// Structured Data Schema.org JSON-LD
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: "KerabatWeb",
+  image: `${SITE_URL}/og-image.jpg`,
+  url: SITE_URL,
+  telephone: "+6285938573419",
+  priceRange: "Rp 499.000 - Rp 4.500.000",
+  address: {
+    "@type": "PostalAddress",
+    addressCountry: "ID",
+  },
+  description:
+    "Jasa pembuatan website profesional, cepat, dan ramah SEO untuk UMKM dan perusahaan.",
+  sameAs: [SITE_URL],
+};
+
+const pageTitle = "Jasa Pembuatan Website Profesional, Cepat & Ramah SEO";
+const pageDescription =
+  "Jasa pembuatan website landing page, company profile, dan toko online (e-commerce) bergaransi resmi. Pengerjaan kilat 3-5 hari, bebas domain & SSL, harga transparan mulai Rp 499rb.";
 ---
 
-<Layout>
-	<Welcome />
+<Layout title={pageTitle} description={pageDescription} jsonLd={jsonLd}>
+  <HeroSection waNumber={waNumber} />
+  <ServicesSection />
+  <WhyUsSection />
+  <GuaranteeSection />
+  <TechPartners />
+  <PortfolioSection />
+  <TestimonialSection />
+  <PricingSection pricing={pricingData} waNumber={waNumber} />
+  <FaqSection faqs={faqsData} waNumber={waNumber} />
+
+  <!-- SEMUA PROVINSI (chip kecil klik-able) -->
+  <AllProvincesSection provinsiList={allProvinsi} />
+
+  <!-- PETA AREA LAYANAN (otomatis: Indonesia di homepage) -->
+  <MapSection />
 </Layout>

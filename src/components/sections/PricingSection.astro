@@ -1,0 +1,218 @@
+---
+import { PricingPackage } from "../../types";
+
+interface Props {
+  pricing: PricingPackage[];
+  waNumber?: string;
+  locationName?: string;
+  note?: string;
+}
+
+const {
+  pricing,
+  waNumber = "6285938573419",
+  locationName,
+  note,
+} = Astro.props;
+
+// Helper untuk membuat link WhatsApp langsung di Astro frontmatter
+const getWaLink = (msg: string) =>
+  `https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`;
+---
+
+<section
+  id="harga"
+  class="relative bg-white border-y border-slate-200 py-16 sm:py-24 overflow-hidden"
+>
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
+    
+    <!-- Header Section -->
+    <div class="text-center mb-12 sm:mb-16">
+      <span class="inline-block text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-red-50 border border-red-200 text-red-700 px-4 py-1.5 rounded-full mb-3 shadow-sm">
+        Paket Harga Transparan
+      </span>
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mt-1">
+        Pilihan Paket{" "}
+        <span class="text-red-600">
+          Terbaik {locationName ? `di ${locationName}` : "Untuk Anda"}
+        </span>
+      </h2>
+      <p class="mt-3 text-xs sm:text-sm text-slate-600 max-w-xl mx-auto leading-relaxed font-normal">
+        Investasi website profesional dengan fitur lengkap, performa tinggi, dan garansi keamanan penuh.
+      </p>
+    </div>
+
+    <!-- Grid Kartu Harga -->
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4 items-stretch">
+      {pricing.map((p) => {
+        const isPopular = p.popular;
+
+        return (
+          <div
+            class={`rounded-3xl flex flex-col justify-between transition-all duration-300 relative overflow-hidden group hover:-translate-y-1 shadow-sm ${
+              isPopular
+                ? "bg-red-600 text-white border-2 border-red-700 ring-2 ring-red-600/20 lg:-translate-y-2 shadow-2xl"
+                : "bg-white text-slate-900 border border-slate-200 hover:border-red-500 shadow-sm"
+            }`}
+          >
+            {/* Badge Terpopuler / Rekomendasi */}
+            {p.badge && (
+              <div
+                class={`absolute top-0 right-0 text-[10px] sm:text-xs font-extrabold px-4 py-1.5 rounded-bl-2xl uppercase tracking-wider z-20 shadow-sm ${
+                  isPopular
+                    ? "bg-white text-red-600 border-b border-l border-red-200 font-black"
+                    : "bg-red-600 text-white border-b border-l border-red-700"
+                }`}
+              >
+                {p.badge}
+              </div>
+            )}
+
+            <div>
+              {/* Header Kartu */}
+              <div
+                class={`p-6 sm:p-7 text-left relative border-b transition-colors ${
+                  isPopular
+                    ? "bg-red-700/50 border-red-500/50 text-white"
+                    : "bg-slate-50/60 border-slate-200 text-slate-900 group-hover:border-red-100"
+                }`}
+              >
+                <h3
+                  class={`text-xl sm:text-2xl font-extrabold mb-1.5 ${
+                    isPopular ? "text-white" : "text-slate-900"
+                  }`}
+                >
+                  {p.name}
+                </h3>
+                <p
+                  class={`text-xs min-h-[32px] leading-relaxed mb-5 font-normal ${
+                    isPopular ? "text-red-100" : "text-slate-600"
+                  }`}
+                >
+                  {p.target}
+                </p>
+
+                {/* Kotak Harga */}
+                <div
+                  class={`p-3.5 rounded-2xl border shadow-sm ${
+                    isPopular
+                      ? "bg-red-700 border-red-500 text-white"
+                      : "bg-white border-slate-200 text-slate-900"
+                  }`}
+                >
+                  {p.priceNormal && (
+                    <span
+                      class={`text-xs block font-mono mb-0.5 line-through ${
+                        isPopular ? "text-red-200" : "text-slate-400"
+                      }`}
+                    >
+                      {p.priceNormal}
+                    </span>
+                  )}
+                  <div class="flex items-baseline gap-1.5 flex-wrap">
+                    <span
+                      class={`text-2xl sm:text-3xl font-extrabold ${
+                        isPopular ? "text-white" : "text-slate-900"
+                      }`}
+                    >
+                      {p.pricePromo}
+                    </span>
+                  </div>
+                  <div class="mt-2 flex items-center justify-between">
+                    <span
+                      class={`text-[11px] font-semibold px-2 py-0.5 rounded-md border ${
+                        isPopular
+                          ? "bg-white/10 text-white border-white/20"
+                          : "bg-red-50 text-red-700 border-red-200"
+                      }`}
+                    >
+                      {p.diskon}
+                    </span>
+                    <span
+                      class={`text-[10px] font-mono tracking-wider ${
+                        isPopular ? "text-red-200" : "text-slate-500"
+                      }`}
+                    >
+                      {p.periode}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Daftar Fitur / Layanan Meliputi */}
+              <div
+                class={`p-5 sm:p-6 ${
+                  isPopular ? "bg-red-600 text-white" : "bg-white text-slate-900"
+                }`}
+              >
+                <p
+                  class={`text-xs font-bold uppercase tracking-wider mb-4 ${
+                    isPopular ? "text-red-200" : "text-slate-500"
+                  }`}
+                >
+                  Layanan Meliputi:
+                </p>
+                <ul
+                  class={`space-y-3 text-xs sm:text-sm ${
+                    isPopular ? "text-red-50" : "text-slate-700"
+                  }`}
+                >
+                  {p.features.map((f) => (
+                    <li
+                      class={`flex items-start gap-2.5 pb-2.5 border-b last:border-0 last:pb-0 ${
+                        isPopular ? "border-red-400/40" : "border-red-200"
+                      }`}
+                    >
+                      <span
+                        class={`w-4 h-4 rounded-full flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5 shadow-sm border ${
+                          isPopular
+                            ? "bg-white text-red-600 border-white"
+                            : "bg-red-50 text-red-600 border-red-200"
+                        }`}
+                      >
+                        ✓
+                      </span>
+                      <span class="flex-1 leading-snug font-normal">{f}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            {/* Tombol Aksi Bawah */}
+            <div
+              class={`p-5 sm:p-6 border-t ${
+                isPopular
+                  ? "bg-red-700/50 border-red-500/50"
+                  : "bg-slate-50/50 border-slate-200 group-hover:border-red-100"
+              } transition-colors`}
+            >
+              <a
+                href={getWaLink(
+                  `Halo KerabatWeb, saya ingin memesan ${p.name} (${p.pricePromo})${
+                    locationName ? ` untuk wilayah ${locationName}` : ""
+                  }.`
+                )}
+                target="_blank"
+                rel="noopener noreferrer"
+                class={`block text-center px-4 py-3.5 rounded-full font-semibold transition-all text-xs sm:text-sm shadow-sm active:scale-95 ${
+                  isPopular
+                    ? "bg-white hover:bg-red-50 text-red-600 font-bold shadow-md"
+                    : "bg-white hover:bg-slate-100 text-slate-900 border border-slate-300"
+                }`}
+              >
+                Jadwalkan Konsultasi
+              </a>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+
+    <!-- Catatan Bawah -->
+    <p class="text-center text-xs text-slate-500 mt-10 font-normal">
+      {note ??
+        "* Harga belum termasuk PPN. Konsultasi gratis via WhatsApp untuk kebutuhan kustom fitur khusus."}
+    </p>
+  </div>
+</section>

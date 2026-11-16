@@ -1,0 +1,90 @@
+---
+// Bagian Frontmatter Astro (Server-side)
+const waNumber = "6285938573419";
+---
+
+<form id="whatsapp-contact-form" class="space-y-4">
+  <div>
+    <label for="name" class="block text-xs font-bold text-slate-800 mb-1.5 uppercase tracking-wider">Nama Lengkap</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      required
+      placeholder="Contoh: Budi Santoso"
+      class="w-full px-4 py-3 rounded-xl bg-white border border-slate-300 focus:border-red-600 focus:ring-1 focus:ring-red-600 text-slate-900 placeholder-slate-400 outline-none transition-all text-sm font-normal shadow-sm"
+    />
+  </div>
+  
+  <div>
+    <label for="email" class="block text-xs font-bold text-slate-800 mb-1.5 uppercase tracking-wider">Alamat Email</label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      required
+      placeholder="budi@example.com"
+      class="w-full px-4 py-3 rounded-xl bg-white border border-slate-300 focus:border-red-600 focus:ring-1 focus:ring-red-600 text-slate-900 placeholder-slate-400 outline-none transition-all text-sm font-normal shadow-sm"
+    />
+  </div>
+
+  <div>
+    <label for="service" class="block text-xs font-bold text-slate-800 mb-1.5 uppercase tracking-wider">Jenis Layanan</label>
+    <select
+      id="service"
+      name="service"
+      required
+      class="w-full px-4 py-3 rounded-xl bg-white border border-slate-300 focus:border-red-600 focus:ring-1 focus:ring-red-600 text-slate-900 outline-none transition-all text-sm appearance-none font-normal shadow-sm"
+    >
+      <option value="" class="bg-white text-slate-400" disabled selected>Pilih Layanan...</option>
+      <option value="Landing Page" class="bg-white text-slate-900">Landing Page</option>
+      <option value="Company Profile" class="bg-white text-slate-900">Company Profile</option>
+      <option value="Toko Online (E-Commerce)" class="bg-white text-slate-900">Toko Online (E-Commerce)</option>
+      <option value="Custom / Web App" class="bg-white text-slate-900">Custom / Web App</option>
+      <option value="Lainnya" class="bg-white text-slate-900">Lainnya</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="message" class="block text-xs font-bold text-slate-800 mb-1.5 uppercase tracking-wider">Pesan / Kebutuhan Anda</label>
+    <textarea
+      id="message"
+      name="message"
+      rows="4"
+      required
+      placeholder="Ceritakan sedikit tentang bisnis dan website yang Anda inginkan..."
+      class="w-full px-4 py-3 rounded-xl bg-white border border-slate-300 focus:border-red-600 focus:ring-1 focus:ring-red-600 text-slate-900 placeholder-slate-400 outline-none transition-all text-sm resize-none font-normal shadow-sm"
+    ></textarea>
+  </div>
+
+  <button
+    type="submit"
+    class="w-full py-3.5 bg-red-600 hover:bg-red-700 text-white font-extrabold rounded-full shadow-md shadow-red-600/20 transition-all active:scale-95 text-xs sm:text-sm flex items-center justify-center gap-2 mt-2 cursor-pointer"
+  >
+    Kirim via WhatsApp
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+    </svg>
+  </button>
+</form>
+
+<script define:vars={{ waNumber }}>
+  const form = document.getElementById("whatsapp-contact-form");
+
+  if (form) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const name = formData.get("name");
+      const email = formData.get("email");
+      const service = formData.get("service");
+      const message = formData.get("message");
+
+      const text = `Halo KerabatWeb,\n\nNama: ${name}\nEmail: ${email}\nLayanan: ${service}\n\nPesan:\n${message}`;
+      const waLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`;
+      
+      window.open(waLink, "_blank");
+    });
+  }
+</script>

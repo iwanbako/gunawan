@@ -1,0 +1,88 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import BlogList from "../../components/sections/BlogList.astro"; // Sesuaikan folder komponen BlogList Anda
+import { blogPosts } from "../../data/blog-posts";
+
+const SITE_URL = "https://kerabatweb.com";
+
+// Urutkan artikel berdasarkan isoDate (terbaru dulu)
+const sortedPosts = [...blogPosts].sort(
+  (a, b) => new Date(b.isoDate).getTime() - new Date(a.isoDate).getTime(),
+);
+
+// Helper: Format tanggal ke standar ISO 8601 (Google Schema)
+const formatIsoDate = (dateStr: string) => {
+  if (dateStr.includes("T")) return dateStr;
+  return `${dateStr}T00:00:00+07:00`; // Waktu Indonesia Barat
+};
+
+// JSON-LD: Blog Schema
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  name: "Blog & Artikel KerabatWeb",
+  url: `${SITE_URL}/blog`,
+  description:
+    "Kumpulan artikel, tips bisnis, dan panduan seputar dunia website dari KerabatWeb.",
+  blogPost: sortedPosts.slice(0, 10).map((post) => ({
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt,
+    image: post.image,
+    datePublished: formatIsoDate(post.isoDate),
+    author: {
+      "@type": "Person",
+      name: post.author,
+      url: `${SITE_URL}/tentang-kami`,
+    },
+    url: `${SITE_URL}/blog/${post.slug}`,
+  })),
+};
+
+const pageTitle = "Blog & Artikel | KerabatWeb";
+const pageDescription =
+  "Kumpulan artikel, tips bisnis, dan panduan seputar dunia website dari KerabatWeb. Belajar go-digital untuk bisnis Anda.";
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalURL={`${SITE_URL}/blog/`}
+  jsonLd={jsonLd}
+>
+  <main class="flex-1 w-full py-12 sm:py-24 px-3 sm:px-6 relative overflow-hidden bg-white text-slate-900">
+    
+    <!-- Garis Aksen Merah Tipis di Atas Section -->
+    <div class="absolute top-0 left-0 right-0 h-[3px] bg-red-600"></div>
+
+    <!-- Dekorasi Background Glow Merah Halus -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[400px] bg-red-100/50 rounded-full blur-[120px] pointer-events-none"></div>
+
+    <div class="relative z-10 max-w-6xl mx-auto">
+      
+      <!-- HEADER SECTION -->
+      <div class="text-center mb-10 sm:mb-16 px-2">
+        <span class="inline-block text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-red-50 border border-red-200 text-red-700 px-3.5 sm:px-4 py-1.5 rounded-full shadow-sm mb-3 sm:mb-4">
+          Blog & Wawasan
+        </span>
+        <h1 class="text-2xl sm:text-4xl md:text-5xl font-extrabold mb-3 sm:mb-4 tracking-tight text-slate-900">
+          Belajar <span class="text-red-600">Go Digital</span>
+        </h1>
+        <p class="text-xs sm:text-base text-slate-600 max-w-2xl mx-auto leading-relaxed font-normal">
+          Tips bisnis, panduan website, dan insight digital untuk membantu
+          bisnis Anda tumbuh lebih cepat.
+        </p>
+        <p class="text-[11px] sm:text-sm text-slate-500 mt-3 sm:mt-4 font-medium">
+          {sortedPosts.length} artikel tersedia
+        </p>
+      </div>
+
+      <!-- GRID + LOAD MORE (Astro Component) -->
+      <BlogList posts={sortedPosts} />
+      
+      <!-- GARIS PEMBATAS DI BAWAH LIST BLOG -->
+      <div class="w-full border-b border-slate-200 mt-12 sm:mt-20 mb-4"></div>
+      
+    </div>
+  </main>
+</Layout>

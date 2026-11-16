@@ -1,23 +1,98 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+---
+import "../styles/globals.css";
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+// Komponen Umum (Header, Footer, FloatingNav, ScrollToTop)
+import Header from "../components/common/Header.astro";
+import Footer from "../components/common/Footer.astro";
+import FloatingNav from "../components/common/FloatingNav.astro";
+import ScrollToTop from "../components/common/ScrollToTop.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonicalURL?: string;
+  jsonLd?: object;
+}
+
+const SITE_URL = "https://kerabatweb.com";
+const SITE_NAME = "KerabatWeb";
+const waNumber = "6285938573419";
+const waLink = (msg: string) =>
+  `https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`;
+
+const {
+  title = "KerabatWeb - Jasa Pembuatan Website Profesional, Cepat & Ramah SEO",
+  description = "Jasa pembuatan website landing page, company profile, dan toko online (e-commerce) bergaransi resmi. Pengerjaan kilat 3-5 hari, bebas domain & SSL, harga transparan mulai Rp 499rb.",
+  image = `${SITE_URL}/og-image.jpg`,
+  canonicalURL = SITE_URL,
+  jsonLd,
+} = Astro.props;
+---
+
+<html lang="id" class="h-full antialiased">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    
+    <!-- Meta Theme Color & Viewport Settings -->
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#ffffff" />
+    <meta name="color-scheme" content="light" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta
+      name="keywords"
+      content="jasa pembuatan website, buat landing page murah, jasa company profile profesional, pembuatan toko online e-commerce, jasa web design seo friendly, kerabatweb"
+    />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Favicon ICO -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/favicon.ico" type="image/x-icon" />
+
+    <!-- OpenGraph / Social Media -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+
+    <!-- Format Detection -->
+    <meta name="format-detection" content="email=no, address=no, telephone=no" />
+
+    <!-- Script Schema.org JSON-LD -->
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+  </head>
+
+  <body class="min-h-full flex flex-col bg-[#003580] text-white selection:bg-red-600 selection:text-white m-0">
+    <!-- Tombol Scroll to Top -->
+    <ScrollToTop />
+
+    <!-- Header Global -->
+    <Header />
+
+    <!-- Konten Utama Halaman -->
+    <main class="flex-1 w-full">
+      <slot />
+    </main>
+
+    <!-- Footer Global -->
+    <Footer />
+
+    <!-- Floating Nav WhatsApp -->
+    <FloatingNav
+      waDefault={waLink("Halo KerabatWeb, saya ingin konsultasi pembuatan website.")}
+    />
+  </body>
+</html>

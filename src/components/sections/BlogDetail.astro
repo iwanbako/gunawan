@@ -1,0 +1,251 @@
+---
+import type { BlogPost } from "../../data/blog-posts";
+
+interface Props {
+  post: BlogPost;
+  relatedPosts: BlogPost[];
+}
+
+const { post, relatedPosts } = Astro.props;
+
+function getReadingTime(html: string): number {
+  const text = html.replace(/<[^>]*>/g, " ");
+  const words = text.trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.ceil(words / 200));
+}
+
+const readingTime = getReadingTime(post.content);
+---
+
+<div class="bg-white text-slate-900 flex flex-col min-h-screen w-full">
+  
+  <!-- Gunakan overflow-x-clip atau overflow-x-hidden di main agar aman di mobile -->
+  <main class="flex-1 w-full py-8 sm:py-20 px-4 sm:px-6 relative overflow-x-hidden">
+    
+    <!-- Garis Aksen Merah Tipis di Atas Section -->
+    <div class="absolute top-0 left-0 right-0 h-[3px] bg-red-600"></div>
+
+    <!-- Dekorasi Background Glow Merah Halus -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[500px] h-[300px] sm:h-[400px] bg-red-100/50 rounded-full blur-[80px] sm:blur-[120px] pointer-events-none"></div>
+
+    <!-- max-w-5xl (1024px) dengan pembatas w-full -->
+    <div class="relative z-10 max-w-5xl mx-auto w-full min-w-0">
+      <article class="min-w-0 w-full">
+        
+        <!-- BREADCRUMB -->
+        <nav
+          aria-label="Breadcrumb"
+          class="flex items-center flex-wrap gap-2 text-xs sm:text-sm text-slate-500 mb-6"
+        >
+          <a href="/" class="hover:text-red-600 transition-colors font-medium shrink-0">
+            Beranda
+          </a>
+          <span class="text-slate-300">/</span>
+          <a
+            href="/blog"
+            class="hover:text-red-600 transition-colors font-medium shrink-0"
+          >
+            Blog
+          </a>
+          <span class="text-slate-300">/</span>
+          <span class="text-slate-900 font-bold line-clamp-1 break-all">
+            {post.title}
+          </span>
+        </nav>
+
+        <!-- HEADER ARTIKEL -->
+        <header class="mb-8">
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs sm:text-sm font-bold mb-4 uppercase tracking-wider">
+            <time datetime={post.isoDate} class="text-red-600">{post.date}</time>
+            <span class="text-slate-300">•</span>
+            <span class="text-slate-700 normal-case font-semibold tracking-normal">
+              {post.author}
+            </span>
+            <span class="text-slate-300">•</span>
+            <span class="text-slate-700 normal-case font-semibold tracking-normal flex items-center gap-1">
+              <svg
+                class="w-3.5 h-3.5 text-red-600 shrink-0"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                viewBox="0 0 24 24"
+              >
+                <circle cx="12" cy="12" r="9" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 7v5l3 2"
+                />
+              </svg>
+              {readingTime} menit baca
+            </span>
+          </div>
+
+          <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight mb-5 break-words tracking-tight text-slate-900">
+            {post.title}
+          </h1>
+
+          <p class="text-sm sm:text-base md:text-lg text-slate-600 leading-relaxed border-l-4 border-red-600 pl-4 italic font-normal break-words">
+            {post.excerpt}
+          </p>
+        </header>
+
+        <!-- GAMBAR UTAMA -->
+        {post.image && (
+          <figure class="relative w-full h-64 sm:h-80 md:h-[400px] rounded-2xl overflow-hidden border border-slate-200 mb-10 shadow-md bg-slate-100">
+            <img
+              src={post.image}
+              alt={post.title}
+              class="object-cover w-full h-full"
+              loading="eager"
+              fetchpriority="high"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent"></div>
+          </figure>
+        )}
+
+        <!-- KONTEN ARTIKEL -->
+        <div class="bg-white border border-slate-200 rounded-2xl sm:rounded-3xl p-4 sm:p-10 md:p-12 mb-10 shadow-sm relative overflow-hidden">
+          <div class="absolute top-0 left-0 w-full h-[3px] bg-red-600"></div>
+          
+          <!-- Render HTML Konten -->
+          <div
+            class="
+              prose prose-slate max-w-none w-full break-words
+
+              prose-p:text-slate-700 prose-p:leading-[1.9] prose-p:text-[15px] sm:prose-p:text-[16px] md:prose-p:text-[17px] prose-p:mb-6 prose-p:break-words
+
+              prose-p:first-of-type:first-letter:text-5xl sm:prose-p:first-of-type:first-letter:text-6xl prose-p:first-of-type:first-letter:font-extrabold
+              prose-p:first-of-type:first-letter:text-red-600 prose-p:first-of-type:first-letter:float-left
+              prose-p:first-of-type:first-letter:mr-3 prose-p:first-of-type:first-letter:mt-1 prose-p:first-of-type:first-letter:leading-[0.8]
+
+              prose-h2:text-xl sm:prose-h2:text-3xl prose-h2:font-extrabold prose-h2:text-slate-900
+              prose-h2:mt-12 prose-h2:mb-5 prose-h2:pb-3 prose-h2:border-b prose-h2:border-slate-200 prose-h2:break-words
+
+              prose-h3:text-lg sm:prose-h3:text-2xl prose-h3:font-bold prose-h3:text-slate-800 prose-h3:mt-8 prose-h3:mb-4 prose-h3:break-words
+
+              prose-ul:text-slate-700 prose-ol:text-slate-700 prose-ul:leading-relaxed prose-ol:leading-relaxed
+              prose-ul:my-6 prose-li:my-2 prose-li:marker:text-red-600 prose-li:pl-2
+
+              prose-strong:text-slate-900 prose-strong:font-bold
+              prose-a:text-red-600 prose-a:no-underline prose-a:font-semibold hover:prose-a:underline hover:prose-a:underline-offset-4 prose-a:break-all
+              prose-blockquote:border-l-4 prose-blockquote:border-red-600 prose-blockquote:bg-red-50/50
+              prose-blockquote:py-3 sm:prose-blockquote:py-4 prose-blockquote:px-4 sm:prose-blockquote:px-6 prose-blockquote:rounded-r-xl prose-blockquote:not-italic prose-blockquote:my-6 sm:prose-blockquote:my-8
+              prose-blockquote:text-slate-700 prose-blockquote:shadow-sm
+            "
+            set:html={post.content}
+          />
+        </div>
+
+        <!-- TOMBOL KEMBALI -->
+        <div class="mb-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-t border-slate-200 pt-6">
+          <a
+            href="/blog"
+            class="inline-flex items-center gap-2 text-sm font-bold text-red-600 hover:text-red-700 transition-all"
+          >
+            <svg
+              class="w-4 h-4 text-red-600 shrink-0"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M10 19l-7-7m0 0l7-7m-7 7h18"
+              />
+            </svg>
+            Kembali ke Blog
+          </a>
+          <span class="text-xs text-slate-500 italic">
+            Terakhir diperbarui: {post.date}
+          </span>
+        </div>
+      </article>
+
+      <!-- ARTIKEL TERKAIT -->
+      {relatedPosts.length > 0 && (
+        <section class="border-t border-slate-200 pt-10 mt-4">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900">
+              Artikel <span class="text-red-600">Terkait</span>
+            </h2>
+            <a
+              href="/blog"
+              class="text-xs sm:text-sm font-bold text-red-600 hover:underline flex items-center gap-1 shrink-0"
+            >
+              Lihat Semua
+              <svg
+                class="w-3.5 h-3.5 shrink-0"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2.5"
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
+              </svg>
+            </a>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+            {relatedPosts.map((item) => (
+              <div class="min-w-0">
+                <a
+                  href={`/blog/${item.slug}`}
+                  class="group block bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-red-500 hover:shadow-lg transition-all duration-300 h-full flex flex-col shadow-sm hover:-translate-y-1.5"
+                >
+                  <div class="relative w-full h-40 sm:h-44 overflow-hidden shrink-0 bg-slate-100">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/40 to-transparent"></div>
+                  </div>
+                  <div class="p-4 flex-1 flex flex-col min-w-0">
+                    <p class="text-[10px] font-bold mb-2 uppercase tracking-wider text-red-600">
+                      {item.date}
+                    </p>
+                    <h3 class="text-sm sm:text-base font-bold text-slate-900 leading-snug group-hover:text-red-600 transition-colors line-clamp-2 mb-3 break-words">
+                      {item.title}
+                    </h3>
+                    <p class="text-xs text-slate-600 line-clamp-2 mb-3 flex-1 leading-relaxed font-normal break-words">
+                      {item.excerpt}
+                    </p>
+                    <span class="text-xs font-bold text-red-600 flex items-center gap-1 mt-auto shrink-0">
+                      Baca Artikel
+                      <svg
+                        class="w-3.5 h-3.5 text-red-600 group-hover:translate-x-1 transition-transform shrink-0"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.5"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2.5"
+                          d="M14 5l7 7m0 0l-7 7m7-7H3"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+                </a>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+  </main>
+
+  <!-- GARIS PEMBATAS DI ATAS FOOTER -->
+  <div class="border-t border-slate-200 max-w-5xl mx-auto w-full mt-8 mb-4 px-4 sm:px-0"></div>
+</div>

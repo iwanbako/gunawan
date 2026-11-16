@@ -1,0 +1,161 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const SITE_URL = "https://kerabatweb.com";
+const lastUpdated = "7 November 2026";
+
+const pageTitle = "Syarat & Ketentuan";
+const pageDescription =
+  "Syarat dan Ketentuan layanan KerabatWeb. Pelajari aturan main, hak, dan kewajiban Anda sebagai klien sebelum memesan jasa pembuatan website.";
+const pageUrl = `${SITE_URL}/syarat-ketentuan/`;
+
+// Schema: WebPage / Legal
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Syarat & Ketentuan | KerabatWeb",
+  url: pageUrl,
+  description: pageDescription,
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalURL={pageUrl}
+  jsonLd={jsonLd}
+>
+  <main class="flex-1 w-full py-16 sm:py-24 px-4 sm:px-6 relative overflow-hidden bg-white text-slate-900">
+    
+    <!-- Garis Aksen Merah Tipis di Atas Section -->
+    <div class="absolute top-0 left-0 right-0 h-[3px] bg-red-600"></div>
+
+    <!-- Dekorasi Background Glow Merah Halus -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[400px] bg-red-100/50 rounded-full blur-[120px] pointer-events-none"></div>
+
+    <div class="relative z-10 max-w-4xl mx-auto">
+      
+      <!-- Header -->
+      <div class="text-center mb-12 sm:mb-16">
+        <span class="inline-block text-xs font-bold uppercase tracking-wider bg-red-50 border border-red-200 text-red-700 px-4 py-1.5 rounded-full shadow-sm mb-3">
+          Legal & Aturan
+        </span>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 tracking-tight text-slate-900">
+          Syarat & <span class="text-red-600">Ketentuan</span>
+        </h1>
+        <p class="text-sm text-slate-500">
+          Terakhir diperbarui: <span class="font-semibold text-slate-800">{lastUpdated}</span>
+        </p>
+      </div>
+
+      <!-- Content Box -->
+      <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-sm relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-[3px] bg-red-600"></div>
+        
+        <!-- Tambahan kelas [&_li::marker]:text-red-600 untuk membuat bulet poin berwarna merah -->
+        <div class="prose prose-slate prose-sm sm:prose-base max-w-none prose-headings:font-bold prose-headings:text-slate-900 prose-p:text-slate-700 prose-li:text-slate-700 prose-a:text-red-600 prose-a:no-underline hover:prose-a:underline [&_li::marker]:text-red-600">
+          
+          <!-- Intro -->
+          <p class="lead text-base sm:text-lg text-slate-800 mb-8 font-normal">
+            Selamat datang di <strong>KerabatWeb</strong>. Syarat dan Ketentuan ini mengatur penggunaan layanan jasa pembuatan website yang kami sediakan. Dengan melakukan pemesanan, melakukan pembayaran, atau menggunakan layanan kami, Anda dianggap telah membaca, memahami, dan menyetujui seluruh isi Syarat & Ketentuan ini.
+          </p>
+
+          <!-- Section 1 -->
+          <h2 class="text-xl sm:text-2xl mt-10 mb-4">1. Lingkup Layanan</h2>
+          <p class="mb-4">
+            KerabatWeb menyediakan layanan pembuatan website, meliputi:
+          </p>
+          <ul class="list-disc pl-6 space-y-2 mb-6">
+            <li>Desain dan pengembangan Landing Page, Company Profile, dan E-Commerce.</li>
+            <li>Penyediaan domain, hosting, dan sertifikat SSL (sesuai paket yang dipilih).</li>
+            <li>Optimasi SEO dasar (On-Page) dan responsivitas mobile.</li>
+            <li>Dukungan teknis dan pemeliharaan pasca-pengerjaan sesuai paket.</li>
+          </ul>
+
+          <!-- Section 2 -->
+          <h2 class="text-xl sm:text-2xl mt-10 mb-4">2. Alur Pemesanan & Pembayaran</h2>
+          <ul class="list-disc pl-6 space-y-2 mb-6">
+            <li>Pemesanan dianggap sah setelah klien menyetujui penawaran dan melakukan pembayaran <strong>Down Payment (DP) sebesar 50%</strong> dari total biaya.</li>
+            <li>Sisa pelunasan 50% wajib dibayarkan setelah website selesai dikerjakan dan disetujui oleh klien (sebelum proses <em>go-live</em> atau naik ke hosting utama).</li>
+            <li>Semua pembayaran dilakukan melalui transfer bank atau metode pembayaran lain yang disepakati.</li>
+          </ul>
+
+          <!-- Section 3 -->
+          <h2 class="text-xl sm:text-2xl mt-10 mb-4">3. Revisi dan Batasan Pengerjaan</h2>
+          <p class="mb-4">
+            Setiap paket memiliki kuota revisi yang berbeda (tercantum di halaman harga). Ketentuan revisi:
+          </p>
+          <ul class="list-disc pl-6 space-y-2 mb-6">
+            <li>Revisi mencakup perubahan teks, gambar, atau penyesuaian layout minor.</li>
+            <li><strong>Revisi tidak mencakup</strong> perubahan total konsep desain, perubahan struktur halaman, atau penambahan fitur baru setelah pengerjaan dimulai. Hal ini akan dikenakan biaya tambahan.</li>
+            <li>Waktu pengerjaan dapat bertambah apabila klien terlambat memberikan materi (logo, teks, foto) atau terlambat merespons komunikasi.</li>
+          </ul>
+
+          <!-- Section 4 -->
+          <h2 class="text-xl sm:text-2xl mt-10 mb-4">4. Garansi dan Maintenance</h2>
+          <ul class="list-disc pl-6 space-y-2 mb-6">
+            <li>Garansi berlaku untuk kerusakan teknis akibat kesalahan sistem dari pihak kami (misal: error 500, tampilan berantakan akibat update sistem).</li>
+            <li>Garansi <strong>tidak berlaku</strong> jika klien melakukan perubahan kode secara mandiri, menggunakan plugin pihak ketiga yang bentrok, atau website terkena serangan <em>hacking</em> akibat kelalaian penggunaan password.</li>
+            <li>Layanan maintenance bulanan (jika diambil) mencakup update konten, backup data, dan pemantauan keamanan rutin.</li>
+          </ul>
+
+          <!-- Section 5 -->
+          <h2 class="text-xl sm:text-2xl mt-10 mb-4">5. Hak Cipta dan Kepemilikan</h2>
+          <ul class="list-disc pl-6 space-y-2 mb-6">
+            <li>Setelah pelunasan 100%, seluruh hak akses (cPanel, akun WordPress, domain, dan source code) sepenuhnya menjadi milik klien.</li>
+            <li>KerabatWeb berhak menggunakan hasil karya (screenshot website) sebagai bagian dari portofolio kami, kecuali klien secara tertulis meminta sebaliknya (NDA).</li>
+          </ul>
+
+          <!-- Section 6 -->
+          <h2 class="text-xl sm:text-2xl mt-10 mb-4">6. Pembatalan dan Pengembalian Dana</h2>
+          <ul class="list-disc pl-6 space-y-2 mb-6">
+            <li>Pembatalan oleh klien setelah DP dibayarkan dan pengerjaan dimulai <strong>tidak dapat diuangkan kembali</strong> (DP hangus), karena kami telah mengalokasikan waktu dan tenaga untuk proyek tersebut.</li>
+            <li>Jika pembatalan dilakukan oleh pihak KerabatWeb karena alasan tertentu, kami akan mengembalikan dana secara proporsional sesuai progres pengerjaan.</li>
+          </ul>
+
+          <!-- Section 7 -->
+          <h2 class="text-xl sm:text-2xl mt-10 mb-4">7. Batasan Tanggung Jawab</h2>
+          <p class="mb-6">
+            KerabatWeb tidak bertanggung jawab atas kerugian finansial atau non-finansial yang timbul dari kegagalan server hosting pihak ketiga, perubahan kebijakan algoritma Google, atau tindakan peretasan yang tidak dapat dicegah secara wajar.
+          </p>
+
+          <!-- Section 8 -->
+          <h2 class="text-xl sm:text-2xl mt-10 mb-4">8. Perubahan Syarat & Ketentuan</h2>
+          <p class="mb-6">
+            Kami berhak mengubah atau memperbarui Syarat & Ketentuan ini kapan saja tanpa pemberitahuan sebelumnya. Versi terbaru akan selalu diperbarui di halaman ini.
+          </p>
+
+          <!-- Section 9 -->
+          <h2 class="text-xl sm:text-2xl mt-10 mb-4">9. Hubungi Kami</h2>
+          <p class="mb-6">
+            Jika ada hal yang kurang jelas mengenai Syarat & Ketentuan ini, silakan hubungi kami:
+          </p>
+          <div class="bg-red-50/50 p-5 rounded-2xl border border-red-200 inline-block shadow-sm">
+            <p class="m-0 text-sm text-slate-700">
+              📧 Email: <strong class="text-slate-900">halo@kerabatweb.com</strong><br />
+              📱 WhatsApp: <strong class="text-slate-900">+62 859-3857-3419</strong>
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Tombol Navigasi Bawah -->
+      <div class="mt-12 text-center flex flex-col sm:flex-row justify-center gap-4">
+        <a
+          href="/"
+          class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-extrabold text-sm rounded-xl shadow-md shadow-red-600/20 transition-all active:scale-95"
+        >
+          ← Kembali ke Beranda
+        </a>
+        <a
+          href="/kebijakan-privasi"
+          class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white hover:bg-slate-50 text-slate-800 font-semibold text-sm rounded-xl border border-slate-300 transition-all active:scale-95 shadow-sm"
+        >
+          Baca Kebijakan Privasi
+        </a>
+      </div>
+
+    </div>
+  </main>
+</Layout>

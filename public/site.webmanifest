@@ -1,0 +1,21 @@
+{
+  "name": "KerabatWeb - Jasa Pembuatan Website Profesional",
+  "short_name": "KerabatWeb",
+  "description": "Jasa pembuatan website landing page, company profile, dan toko online bergaransi resmi. Mulai Rp 999rb.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#dc2626",
+  "orientation": "portrait",
+  "lang": "id",
+  "dir": "ltr",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ],
+  "categories": ["business", "productivity", "shopping"]
+}
