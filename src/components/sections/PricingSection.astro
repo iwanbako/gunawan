@@ -28,7 +28,7 @@ const getWaLink = (msg: string) =>
     
     <!-- Header Section -->
     <div class="text-center mb-12 sm:mb-16">
-      <span class="inline-block text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-red-50 border border-red-200 text-red-700 px-4 py-1.5 rounded-full mb-3 shadow-sm">
+      <span class="inline-block text-xs font-bold uppercase tracking-wider bg-red-50 border border-red-200 text-red-700 px-4 py-1.5 rounded-full mb-3 shadow-sm">
         Paket Harga Transparan
       </span>
       <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mt-1">
@@ -37,7 +37,7 @@ const getWaLink = (msg: string) =>
           Terbaik {locationName ? `di ${locationName}` : "Untuk Anda"}
         </span>
       </h2>
-      <p class="mt-3 text-xs sm:text-sm text-slate-700 max-w-xl mx-auto leading-relaxed font-normal">
+      <p class="mt-3 text-sm sm:text-base text-slate-700 max-w-xl mx-auto leading-relaxed font-normal">
         Investasi website profesional dengan fitur lengkap, performa tinggi, dan garansi keamanan penuh.
       </p>
     </div>
@@ -58,7 +58,7 @@ const getWaLink = (msg: string) =>
             {/* Badge Terpopuler / Rekomendasi */}
             {p.badge && (
               <div
-                class={`absolute top-0 right-0 text-[10px] sm:text-xs font-extrabold px-4 py-1.5 rounded-bl-2xl uppercase tracking-wider z-20 shadow-sm ${
+                class={`absolute top-0 right-0 text-xs font-extrabold px-4 py-1.5 rounded-bl-2xl uppercase tracking-wider z-20 shadow-sm ${
                   isPopular
                     ? "bg-white text-red-700 border-b border-l border-red-200 font-black"
                     : "bg-red-600 text-white border-b border-l border-red-700"
@@ -74,7 +74,7 @@ const getWaLink = (msg: string) =>
                 class={`p-6 sm:p-7 text-left relative border-b transition-colors ${
                   isPopular
                     ? "bg-red-700/50 border-red-500/50 text-white"
-                    : "bg-slate-50/60 border-slate-200 text-slate-900 group-hover:border-red-100"
+                    : "bg-slate-50 border-slate-200 text-slate-900 group-hover:border-red-100"
                 }`}
               >
                 <h3
@@ -85,7 +85,7 @@ const getWaLink = (msg: string) =>
                   {p.name}
                 </h3>
                 <p
-                  class={`text-xs min-h-[32px] leading-relaxed mb-5 font-medium ${
+                  class={`text-xs sm:text-sm min-h-[36px] leading-relaxed mb-5 font-medium ${
                     isPopular ? "text-white" : "text-slate-700"
                   }`}
                 >
@@ -120,7 +120,7 @@ const getWaLink = (msg: string) =>
                   </div>
                   <div class="mt-2 flex items-center justify-between">
                     <span
-                      class={`text-[11px] font-semibold px-2 py-0.5 rounded-md border ${
+                      class={`text-xs font-semibold px-2.5 py-0.5 rounded-md border ${
                         isPopular
                           ? "bg-white/20 text-white border-white/40"
                           : "bg-red-50 text-red-700 border-red-200"
@@ -129,7 +129,7 @@ const getWaLink = (msg: string) =>
                       {p.diskon}
                     </span>
                     <span
-                      class={`text-[10px] font-mono tracking-wider font-semibold ${
+                      class={`text-xs font-mono tracking-wider font-bold ${
                         isPopular ? "text-white" : "text-slate-700"
                       }`}
                     >
@@ -184,7 +184,7 @@ const getWaLink = (msg: string) =>
               class={`p-5 sm:p-6 border-t ${
                 isPopular
                   ? "bg-red-700/50 border-red-500/50"
-                  : "bg-slate-50/50 border-slate-200 group-hover:border-red-100"
+                  : "bg-slate-50 border-slate-200 group-hover:border-red-100"
               } transition-colors`}
             >
               <a
@@ -195,9 +195,9 @@ const getWaLink = (msg: string) =>
                 )}
                 target="_blank"
                 rel="noopener noreferrer"
-                class={`block text-center px-4 py-3.5 rounded-full font-semibold transition-all text-xs sm:text-sm shadow-sm active:scale-95 ${
+                class={`block text-center px-4 py-3.5 rounded-full font-bold transition-all text-xs sm:text-sm shadow-sm active:scale-95 ${
                   isPopular
-                    ? "bg-white hover:bg-red-50 text-red-700 font-bold shadow-md"
+                    ? "bg-white hover:bg-red-50 text-red-700 shadow-md"
                     : "bg-white hover:bg-slate-100 text-slate-900 border border-slate-300"
                 }`}
               >
@@ -210,7 +210,7 @@ const getWaLink = (msg: string) =>
     </div>
 
     <!-- Catatan Bawah -->
-    <p class="text-center text-xs text-slate-700 mt-10 font-medium">
+    <p class="text-center text-xs sm:text-sm text-slate-700 mt-10 font-medium">
       {note ??
         "* Harga belum termasuk PPN. Konsultasi gratis via WhatsApp untuk kebutuhan kustom fitur khusus."}
     </p>

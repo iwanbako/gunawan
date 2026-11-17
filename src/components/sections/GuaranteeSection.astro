@@ -37,7 +37,7 @@ const guarantees = [
   <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6">
     <!-- Header Section -->
     <div class="text-center mb-12 sm:mb-16">
-      <span class="inline-block text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-red-50 border border-red-200 text-red-700 px-4 py-1.5 rounded-full mb-3 shadow-sm">
+      <span class="inline-block text-xs font-bold uppercase tracking-wider bg-red-50 border border-red-200 text-red-700 px-4 py-1.5 rounded-full mb-3 shadow-sm">
         Komitmen & Proteksi
       </span>
       <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
@@ -51,7 +51,7 @@ const guarantees = [
           </>
         )}
       </h2>
-      <p class="mt-3 text-xs sm:text-sm text-slate-600 max-w-xl mx-auto leading-relaxed">
+      <p class="mt-3 text-sm sm:text-base text-slate-700 max-w-xl mx-auto leading-relaxed font-normal">
         {subtitle ?? (
           kabupaten
             ? `Investasi Anda aman bersama kami. Kami berkomitmen memberikan hasil terbaik untuk bisnis di ${kabupaten} dengan standar kualitas profesional berteknologi tinggi.`
@@ -69,17 +69,17 @@ const guarantees = [
           <!-- Icon Kotak Bundar Merah Solid -->
           <div class="w-12 h-12 rounded-full bg-red-600 border border-red-700 flex items-center justify-center mb-5 shadow-sm shadow-red-600/20 text-white">
             {idx === 0 && (
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
             )}
             {idx === 1 && (
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
               </svg>
             )}
             {idx === 2 && (
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
             )}
@@ -89,7 +89,7 @@ const guarantees = [
             {item.title}
           </h3>
 
-          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+          <p class="text-sm sm:text-base text-slate-700 leading-relaxed font-normal">
             {item.desc}
           </p>
         </div>

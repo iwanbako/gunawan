@@ -4,19 +4,19 @@ const waNumber = "6285938573419";
 
 <div class="mt-10 w-full max-w-4xl bg-white rounded-3xl border border-slate-200 text-left overflow-hidden shadow-xl relative backdrop-blur-md">
   <!-- Header -->
-  <div class="px-5 sm:px-6 py-5 border-b border-slate-100 bg-slate-50/50">
+  <div class="px-5 sm:px-6 py-5 border-b border-slate-200 bg-slate-50">
     <div class="flex items-start justify-between gap-4 flex-wrap">
       <div>
-        <h2 class="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
+        <h2 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2">
           <span class="w-2.5 h-2.5 rounded-full bg-red-600 inline-block animate-pulse"></span>
           Cek Ketersediaan Domain
         </h2>
-        <p class="text-xs text-slate-600 mt-1">
+        <p class="text-xs sm:text-sm text-slate-700 mt-1 font-medium">
           Pastikan nama domain impian Anda masih tersedia sebelum kehabisan.
         </p>
       </div>
-      <span class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-red-700 bg-red-50 border border-red-200 px-3 py-1 rounded-full whitespace-nowrap shadow-sm">
-        <svg class="w-3.5 h-3.5 text-red-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+      <span class="inline-flex items-center gap-1.5 text-xs font-bold text-red-700 bg-red-50 border border-red-200 px-3.5 py-1.5 rounded-full whitespace-nowrap shadow-sm">
+        <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
         </svg>
         Gratis SSL & Hosting
@@ -31,7 +31,7 @@ const waNumber = "6285938573419";
         type="text"
         id="domain-input"
         placeholder="contoh: sayursuper"
-        class="w-full px-4 py-3 rounded-full bg-slate-50 border border-slate-300 focus:border-red-500 focus:ring-1 focus:ring-red-500 text-slate-900 placeholder-slate-400 outline-none transition-all text-sm font-medium"
+        class="w-full px-4 py-3 rounded-full bg-slate-50 border border-slate-300 focus:border-red-500 focus:ring-1 focus:ring-red-500 text-slate-900 placeholder-slate-500 outline-none transition-all text-sm font-medium"
       />
       <button
         type="button"
@@ -47,12 +47,12 @@ const waNumber = "6285938573419";
   </div>
 
   <!-- Hasil Container -->
-  <div id="domain-results-container" class="px-5 sm:px-6 pb-5 bg-white border-t border-slate-100 pt-4 hidden">
-    <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-3">
+  <div id="domain-results-container" class="px-5 sm:px-6 pb-5 bg-white border-t border-slate-200 pt-4 hidden">
+    <p class="text-xs font-bold uppercase tracking-wider text-slate-800 mb-3">
       Hasil Pencarian
     </p>
     <div id="domain-results-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
-    <p class="text-[11px] text-slate-500 mt-4 text-center font-medium">
+    <p class="text-xs text-slate-700 mt-4 text-center font-medium">
       Data ketersediaan dari RDAP. Konfirmasi akhir via WhatsApp.
     </p>
   </div>
@@ -90,7 +90,7 @@ const waNumber = "6285938573419";
   async function handleSearch() {
     const val = inputEl.value.trim().toLowerCase();
     if (!val) {
-      msgEl.className = "mt-3 px-3 py-2.5 text-xs text-red-600 bg-red-50 rounded-xl border border-red-200 flex items-center gap-2 font-medium";
+      msgEl.className = "mt-3 px-3 py-2.5 text-xs text-red-700 bg-red-50 rounded-xl border border-red-200 flex items-center gap-2 font-semibold";
       msgEl.textContent = "Silakan masukkan nama domain terlebih dahulu.";
       msgEl.classList.remove("hidden");
       resultsContainer.classList.add("hidden");
@@ -118,23 +118,23 @@ const waNumber = "6285938573419";
         const isTaken = item.available === false;
         const waLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(`Halo KerabatWeb, saya ingin memesan pembuatan website dengan domain *${item.domain}* yang statusnya tersedia.`)}`;
 
-        let badgeClass = isAvailable ? "text-red-700 bg-red-100 border-red-200" : isTaken ? "text-slate-500 bg-slate-200 border-slate-300" : "text-amber-700 bg-amber-100 border-amber-200";
-        let cardClass = isAvailable ? "border-red-300 bg-red-50/40 shadow-sm" : isTaken ? "border-slate-200 bg-slate-50 opacity-60" : "border-amber-200 bg-amber-50/40";
+        let badgeClass = isAvailable ? "text-red-800 bg-red-100 border-red-300 font-bold" : isTaken ? "text-slate-700 bg-slate-200 border-slate-300 font-semibold" : "text-amber-800 bg-amber-100 border-amber-300 font-semibold";
+        let cardClass = isAvailable ? "border-red-300 bg-red-50/50 shadow-sm" : isTaken ? "border-slate-200 bg-slate-50/80" : "border-amber-200 bg-amber-50/50";
         let statusText = isAvailable ? "Tersedia" : isTaken ? "Terdaftar" : "Gangguan";
 
         return `
           <div class="relative flex flex-col justify-between p-4 rounded-2xl border transition-all ${cardClass}">
-            ${isAvailable ? '<div class="absolute top-0 left-0 right-0 h-0.5 bg-red-600 rounded-t-2xl"></div>' : ''}
+            ${isAvailable ? '<div class="absolute top-0 left-0 right-0 h-1 bg-red-600 rounded-t-2xl"></div>' : ''}
             <div>
               <div class="flex items-center justify-between mb-2">
-                <span class="inline-flex items-center gap-1 text-[10px] font-bold px-2.5 py-0.5 rounded-full border ${badgeClass}">
+                <span class="inline-flex items-center gap-1 text-xs px-2.5 py-0.5 rounded-full border ${badgeClass}">
                   ${statusText}
                 </span>
               </div>
-              <p class="text-sm font-bold truncate ${isTaken ? 'text-slate-500 line-through' : 'text-slate-900'}">${item.domain}</p>
+              <p class="text-sm sm:text-base font-bold truncate ${isTaken ? 'text-slate-600 line-through' : 'text-slate-900'}">${item.domain}</p>
             </div>
             <div class="mt-3">
-              ${isAvailable ? `<a href="${waLink}" target="_blank" class="block w-full py-2 px-3 bg-red-600 hover:bg-red-700 text-white text-[11px] font-bold rounded-full text-center transition-all shadow-sm">Klaim Domain</a>` : `<p class="text-[11px] text-slate-500 text-center py-2 font-medium">Tidak tersedia</p>`}
+              ${isAvailable ? `<a href="${waLink}" target="_blank" class="block w-full py-2 px-3 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-full text-center transition-all shadow-sm">Klaim Domain</a>` : `<p class="text-xs text-slate-700 text-center py-2 font-semibold">Tidak tersedia</p>`}
             </div>
           </div>
         `;
@@ -142,7 +142,7 @@ const waNumber = "6285938573419";
 
       resultsContainer.classList.remove("hidden");
     } catch {
-      msgEl.className = "mt-3 px-3 py-2.5 text-xs text-red-600 bg-red-50 rounded-xl border border-red-200 flex items-center gap-2 font-medium";
+      msgEl.className = "mt-3 px-3 py-2.5 text-xs text-red-700 bg-red-50 rounded-xl border border-red-200 flex items-center gap-2 font-semibold";
       msgEl.textContent = "Gagal terhubung ke layanan RDAP. Silakan coba lagi.";
       msgEl.classList.remove("hidden");
     } finally {
