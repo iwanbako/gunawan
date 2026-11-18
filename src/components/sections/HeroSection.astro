@@ -14,10 +14,10 @@ const HERO_BG =
 
 const {
   waNumber = "6285938573419",
-  badge = "Website Online dalam 48 Jam",
+  badge = "Jasa Pembuatan Website Profesional — Online dalam 48 Jam",
   headline,
   subheadline,
-  ctaText = "Buatkan Saya Website",
+  ctaText = "Konsultasi Gratis via WhatsApp",
 } = Astro.props;
 
 const getWaLink = (msg: string) =>
@@ -31,7 +31,7 @@ const getWaLink = (msg: string) =>
   <!-- ═══ BACKGROUND IMAGE ═══ -->
   <img
     src={HERO_BG}
-    alt=""
+    alt="Ilustrasi jasa pembuatan website profesional untuk bisnis"
     aria-hidden="true"
     class="absolute inset-0 z-0 w-full h-full object-cover object-center scale-105 opacity-50"
     loading="eager"
@@ -44,7 +44,7 @@ const getWaLink = (msg: string) =>
 
   <!-- ═══ KONTEN UTAMA ═══ -->
   <div class="relative z-20 w-full max-w-5xl mx-auto px-4 sm:px-6 flex flex-col items-center text-center">
-    
+
     <!-- BADGE -->
     <div class="mb-4 inline-block">
       <span class="inline-block text-xs font-bold uppercase tracking-wider bg-white/90 backdrop-blur-sm border border-red-200 text-red-700 px-4 py-1.5 rounded-full shadow-sm">
@@ -62,7 +62,7 @@ const getWaLink = (msg: string) =>
           <span class="text-red-600">
             Jasa Pembuatan Website
           </span>{" "}
-          Profesional untuk Bisnis Anda
+          Profesional, Cepat, dan SEO Friendly untuk Bisnis Anda
         </>
       )}
     </h1>
@@ -70,14 +70,14 @@ const getWaLink = (msg: string) =>
     <!-- SUBHEADLINE -->
     <p class="text-sm sm:text-base md:text-lg text-slate-800 font-semibold leading-relaxed max-w-2xl mx-auto mb-8 drop-shadow-sm">
       {subheadline ??
-        "Website cepat, SEO-friendly, dan fokus konversi. Dibangun dengan tech stack modern, siap tingkatkan penjualan Anda."}
+        "Jasa website profesional dengan desain modern, performa cepat, dan optimasi SEO. Website siap konversi untuk UMKM, startup, hingga korporasi — bergaransi dan siap tingkatkan penjualan Anda."}
     </p>
 
     <!-- CTA BUTTONS -->
     <div class="flex flex-col sm:flex-row gap-3.5 w-full sm:w-auto justify-center mb-10">
       <a
         href={getWaLink(
-          "Halo KerabatWeb, saya tertarik konsultasi pembuatan website."
+          "Halo KerabatWeb, saya tertarik konsultasi jasa pembuatan website profesional."
         )}
         target="_blank"
         rel="noopener noreferrer"
@@ -89,7 +89,7 @@ const getWaLink = (msg: string) =>
         href="#harga"
         class="px-8 py-3.5 rounded-full bg-white/90 backdrop-blur-sm border border-slate-300 text-slate-900 hover:bg-white font-semibold text-center shadow-sm transition-all duration-200 hover:scale-[1.02] active:scale-95 text-sm sm:text-base"
       >
-        Lihat Paket Harga
+        Lihat Paket Harga Jasa Website
       </a>
     </div>
 

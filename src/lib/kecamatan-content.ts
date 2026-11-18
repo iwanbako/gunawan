@@ -64,7 +64,7 @@ export function generateKecamatanContent(
     metaDescription: `Jasa pembuatan website profesional di Kecamatan ${namaKecamatan}, ${namaKabupaten}, ${namaProvinsi}. Cocok untuk UMKM, toko online, sekolah, dan company profile. Harga mulai Rp 999.000, gratis domain & hosting 1 tahun.`,
 
     hero: {
-      badge: `Website Profesional untuk Bisnis di Kecamatan ${namaKecamatan}`,
+      badge: `Jasa Pembuatan Website Profesional di Kecamatan ${namaKecamatan}`,
       headline: `Jasa Pembuatan Website ${namaKecamatan} ${namaKabupaten}`,
       subheadline: `Bantu bisnis, UMKM, dan instansi di Kecamatan ${namaKecamatan}, ${namaKabupaten} tampil online dengan website cepat, SEO-friendly, dan mobile responsive bersama KerabatWeb.`,
       ctaText: "Konsultasi Gratis via WhatsApp",
